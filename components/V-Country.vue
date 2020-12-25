@@ -2,7 +2,7 @@
   <div :class="{ country: true, 'country--dark': dark }">
     <img :src="flag" :alt="`flag for ${name} country`" class="country--image" />
     <div class="country--content">
-      <h2 @click="openCurrCountry">{{ name }}</h2>
+      <h2 class="clickable" @click="openCurrCountry">{{ name }}</h2>
       <ul>
         <li><span>Population:</span> {{ population }}</li>
         <li><span>Region:</span> {{ region }}</li>

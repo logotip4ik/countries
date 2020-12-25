@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
     <!-- TODO: add search and filter -->
+    <div class="toolbar">
+      <VSearch v-model="search"></VSearch>
+    </div>
     <div class="container">
       <VCountry
         v-for="(country, idx) in countries"
@@ -20,6 +23,23 @@ import { mapState } from 'vuex'
 
 const filters = {
   none: (list) => list,
+  custom: (list, term) => {
+    const initialList = []
+
+    // This searchs through country names
+    const countryNames = list.filter(({ name }) =>
+      name.toLowerCase().includes(term.toLowerCase())
+    )
+    initialList.push(...countryNames)
+
+    // This searchs through country capitals
+    const countryCapitals = list.filter(({ capital }) =>
+      capital.toLowerCase().includes(term.toLowerCase())
+    )
+    initialList.push(...countryCapitals)
+
+    return initialList
+  },
 }
 
 export default {
@@ -32,12 +52,19 @@ export default {
   },
   data: () => ({
     filter: 'none',
+    search: '',
   }),
   computed: {
     countries() {
-      return filters[this.filter](this.rawCountries)
+      return filters[this.filter](this.rawCountries, this.search)
     },
     ...mapState(['dark']),
+  },
+  watch: {
+    search(val) {
+      if (val) this.filter = 'custom'
+      else if (!val) this.filter = 'none'
+    },
   },
   methods: {
     genKey() {
@@ -56,11 +83,21 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 2rem 1rem;
+  padding: 0 1rem 1rem;
 
   &--center {
     align-items: center;
   }
+}
+
+.toolbar {
+  max-width: 1600px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0 1rem;
 }
 
 .clickable {
