@@ -30,7 +30,14 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/fontawesome',
   ],
+
+  fontawesome: {
+    icons: {
+      solid: ['faCog'],
+    },
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
