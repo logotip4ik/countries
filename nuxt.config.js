@@ -35,7 +35,7 @@ export default {
 
   fontawesome: {
     icons: {
-      solid: ['faArrowLeft', 'faMoon', 'faSun', 'faSearch'],
+      solid: ['faArrowLeft', 'faMoon', 'faSun', 'faSearch', 'faChevronDown'],
     },
   },
 

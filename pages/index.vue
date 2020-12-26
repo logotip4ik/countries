@@ -3,6 +3,7 @@
     <!-- TODO: add search and filter -->
     <div class="toolbar">
       <VSearch v-model="search"></VSearch>
+      <VDropdown @select-region="setFilterForRegion"></VDropdown>
     </div>
     <div class="container">
       <VCountry
@@ -23,18 +24,21 @@ import { mapState } from 'vuex'
 
 const filters = {
   none: (list) => list,
-  custom: (list, term) => {
+  region: (list, { regionName }) => {
+    return list.filter(({ region }) => region.toLowerCase() === regionName)
+  },
+  custom: (list, { search }) => {
     const initialList = []
 
     // This searchs through country names
     const countryNames = list.filter(({ name }) =>
-      name.toLowerCase().includes(term.toLowerCase())
+      name.toLowerCase().includes(search.toLowerCase())
     )
     initialList.push(...countryNames)
 
     // This searchs through country capitals
     const countryCapitals = list.filter(({ capital }) =>
-      capital.toLowerCase().includes(term.toLowerCase())
+      capital.toLowerCase().includes(search.toLowerCase())
     )
     initialList.push(...countryCapitals)
 
@@ -53,10 +57,14 @@ export default {
   data: () => ({
     filter: 'none',
     search: '',
+    regionName: '',
   }),
   computed: {
     countries() {
-      return filters[this.filter](this.rawCountries, this.search)
+      return filters[this.filter](this.rawCountries, {
+        search: this.search,
+        regionName: this.regionName,
+      })
     },
     ...mapState(['dark']),
   },
@@ -67,8 +75,14 @@ export default {
     },
   },
   methods: {
-    genKey() {
-      return Math.floor(Math.random() * 10000)
+    setFilterForRegion(regionName) {
+      this.filter = 'region'
+      if (regionName === 'none') {
+        this.regionName = ''
+        this.filter = 'none'
+      } else {
+        this.regionName = regionName
+      }
     },
   },
   head: {
@@ -101,6 +115,12 @@ export default {
   align-items: center;
   flex-wrap: wrap;
   padding: 0 1rem;
+}
+
+@media screen and (max-width: 620px) {
+  .toolbar {
+    justify-content: center;
+  }
 }
 
 .clickable {
