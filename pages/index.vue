@@ -117,7 +117,7 @@ export default {
   padding: 0 1rem;
 }
 
-@media screen and (max-width: 620px) {
+@media screen and (max-width: 644px) {
   .toolbar {
     justify-content: center;
   }
