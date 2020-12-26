@@ -2,7 +2,7 @@
   <nav>
     <h1 class="clickable" @click="$router.push('/')">Where in the world?</h1>
     <button @click="toggleDarkMode">
-      <fontAwesomeIcon icon="moon" /> Dark Mode
+      <fontAwesomeIcon icon="moon" /> <span>Dark Mode</span>
     </button>
   </nav>
 </template>
@@ -40,12 +40,17 @@ nav {
     letter-spacing: 2px;
     font: inherit;
     font-size: 0.8rem;
-    font-weight: 600;
+    font-weight: 800;
     transition: background 150ms ease-out;
 
     &:hover,
     &:focus {
       background: rgb(223, 223, 223);
+    }
+
+    svg {
+      transform: translateY(-1px);
+      margin-right: 0.5rem;
     }
   }
 }
