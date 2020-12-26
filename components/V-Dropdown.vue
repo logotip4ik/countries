@@ -2,7 +2,9 @@
   <div ref="dropdown" class="dropdown">
     <div class="dropdown--header" @click="toggleDropdown">
       <fontAwesomeIcon icon="chevron-down" />
-      <h3>Filter by Region</h3>
+      <h3>
+        {{ currRegion === 'None' ? 'Filter by Region' : currRegion }}
+      </h3>
     </div>
     <div class="dropdown__content">
       <div
@@ -12,6 +14,7 @@
         @click="
           $emit('select-region', region.toLowerCase())
           toggleDropdown()
+          currRegion = region
         "
       >
         <span>{{ region }}</span>
@@ -27,6 +30,7 @@ export default {
     regions: ['None', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'],
     timeout: null,
     isOpened: false,
+    currRegion: 'None',
   }),
   methods: {
     toggleDropdown() {
