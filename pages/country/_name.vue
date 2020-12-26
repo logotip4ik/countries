@@ -14,7 +14,12 @@ export default {
     const country = await $axios.$get(
       `https://restcountries.eu/rest/v2/name/${requestName}?fullText=true`
     )
-    return { country }
+    return { country: country[0] }
+  },
+  head() {
+    return {
+      title: `Country: ${this.country.name}`,
+    }
   },
 }
 </script>

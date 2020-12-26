@@ -71,6 +71,9 @@ export default {
       return Math.floor(Math.random() * 10000)
     },
   },
+  head: {
+    title: 'Countries',
+  },
 }
 </script>
 

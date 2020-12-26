@@ -10,5 +10,8 @@
 <script>
 export default {
   name: 'CountryIndex',
+  head: {
+    title: 'This country not found!',
+  },
 }
 </script>
