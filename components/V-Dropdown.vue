@@ -1,29 +1,40 @@
 <template>
-  <div ref="dropdown" class="dropdown">
+  <div
+    ref="dropdown"
+    :class="{
+      dropdown: true,
+      'dropdown--dark': dark,
+      'dropdown--active': isOpened,
+    }"
+  >
     <div class="dropdown--header" @click="toggleDropdown">
       <fontAwesomeIcon icon="chevron-down" />
       <h3>
         {{ currRegion === 'None' ? 'Filter by Region' : currRegion }}
       </h3>
     </div>
-    <div class="dropdown__content">
-      <div
-        v-for="(region, idx) in regions"
-        :key="idx"
-        class="dropdown__content--item"
-        @click="
-          $emit('select-region', region.toLowerCase())
-          toggleDropdown()
-          currRegion = region
-        "
-      >
-        <span>{{ region }}</span>
+    <transition name="fade" mode="out-in">
+      <div v-show="isOpened" class="dropdown__content">
+        <div
+          v-for="(region, idx) in regions"
+          :key="idx"
+          class="dropdown__content--item"
+          @click="
+            $emit('select-region', region.toLowerCase())
+            toggleDropdown()
+            currRegion = region
+          "
+        >
+          <span>{{ region }}</span>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'Dropdown',
   data: () => ({
@@ -32,14 +43,15 @@ export default {
     isOpened: false,
     currRegion: 'None',
   }),
+  computed: {
+    ...mapState(['dark']),
+  },
   methods: {
     toggleDropdown() {
       this.isOpened = !this.isOpened
-      this.$refs.dropdown.classList.toggle('dropdown--active')
       clearTimeout(this.timeout)
       if (this.isOpened) {
         this.timeout = setTimeout(() => {
-          this.$refs.dropdown.classList.toggle('dropdown--active')
           this.isOpened = false
         }, 7500)
       }
@@ -49,6 +61,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/variables';
+
 .dropdown {
   position: relative;
   padding: 0.75rem 1rem;
@@ -58,12 +72,35 @@ export default {
   border-radius: 0.25rem;
   margin: 0.5rem 1rem;
 
+  &--dark {
+    background: $dark-blue;
+
+    .dropdown--header {
+      &:hover * {
+        color: white;
+      }
+      * {
+        color: hsl(207, 35%, 57%);
+      }
+    }
+
+    .dropdown__content {
+      background: $dark-blue;
+      color: white;
+
+      &--item:hover {
+        background: hsl(208, 26%, 27%);
+      }
+    }
+
+    &.dropdown--active .dropdown--header * {
+      color: white;
+    }
+  }
+
   &--active {
     .dropdown--header * {
       color: black;
-    }
-    .dropdown__content {
-      display: block;
     }
   }
 
@@ -99,7 +136,6 @@ export default {
     right: 0;
     background: white;
     box-shadow: 0 5px 10px 0 rgba($color: #000000, $alpha: 0.2);
-    display: none;
     height: fit-content;
     overflow: hidden;
 
@@ -113,5 +149,15 @@ export default {
       }
     }
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

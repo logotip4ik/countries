@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrapper">
+  <div :class="{ 'input-wrapper': true, 'input-wrapper--dark': dark }">
     <fontAwesomeIcon icon="search" />
     <input
       placeholder="Search for country or capital..."
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'CustomSearch',
   props: {
@@ -18,6 +20,9 @@ export default {
       type: String,
       required: true,
     },
+  },
+  computed: {
+    ...mapState(['dark']),
   },
 }
 </script>
@@ -33,6 +38,17 @@ export default {
   position: relative;
   max-width: 350px;
   width: 100%;
+
+  &--dark {
+    background: $dark-blue;
+
+    path {
+      color: hsl(207, 35%, 57%);
+    }
+    input {
+      color: hsl(207, 35%, 57%);
+    }
+  }
 
   svg {
     position: absolute;

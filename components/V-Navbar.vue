@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav :class="{ dark }">
     <h1 class="clickable" @click="$router.push('/')">Where in the world?</h1>
     <button @click="toggleDarkMode">
       <fontAwesomeIcon icon="moon" /> <span>Dark Mode</span>
@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/variables';
+
 nav {
   width: 100%;
   padding: 1.5rem 2rem;
@@ -30,6 +32,20 @@ nav {
   align-items: center;
   background: white;
   box-shadow: 0 5px 10px 0 rgba($color: #000000, $alpha: 0.1);
+
+  &.dark {
+    background: $dark-blue;
+    color: white;
+
+    button {
+      color: white;
+
+      &:hover,
+      &:focus {
+        background: hsl(208, 26%, 27%);
+      }
+    }
+  }
 
   button {
     border: none;
@@ -42,6 +58,7 @@ nav {
     font-size: 0.8rem;
     font-weight: 800;
     transition: background 150ms ease-out;
+    cursor: pointer;
 
     &:hover,
     &:focus {

@@ -58,13 +58,19 @@ export default {
 @import '@/assets/scss/variables';
 
 .country {
-  max-width: 350px;
+  max-width: 300px;
   border-radius: 0.25rem;
   margin: 1rem 2rem 5rem;
   overflow: hidden;
   background: white;
   box-shadow: 0 0 20px -10px rgba($color: #000000, $alpha: 0.2);
   min-height: 450px;
+  color: $very-dark-blue-text;
+
+  &--dark {
+    background: $dark-blue;
+    color: white;
+  }
 
   &--image {
     width: 100%;

@@ -1,6 +1,5 @@
 <template>
-  <div class="wrapper">
-    <!-- TODO: add search and filter -->
+  <div :class="{ wrapper: true, 'wrpapper--dark': dark }">
     <div class="toolbar">
       <VSearch v-model="search"></VSearch>
       <VDropdown @select-region="setFilterForRegion"></VDropdown>

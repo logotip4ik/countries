@@ -1,33 +1,30 @@
 <template>
-  <div class="wrapper">
+  <div :class="{ wrapper: true, 'wrapper--dark': dark }">
     <div class="toolbar">
       <button @click="$router.push('/')">
         <fontAwesomeIcon icon="arrow-left" />
         <span>Back</span>
       </button>
     </div>
-    <div class="content">
+    <div class="row">
       <div class="col">
         <img :src="country.flag" :alt="`Flag for ${country.name}`" />
       </div>
       <div class="col col--padding">
         <h1 class="col--header">{{ country.name }}</h1>
-        <div class="info">
-          <div v-for="(item, idx) in keys" :key="idx" class="info--item">
+        <div class="col__info">
+          <div v-for="(item, idx) in keys" :key="idx" class="col__info--item">
             <span class="thick">{{ item.name }}:</span>
-            <span v-if="typeof country[item.key] !== 'object'">{{
-              country[item.key]
-            }}</span>
+            <span v-if="typeof country[item.key] !== 'object'">
+              {{ country[item.key] }}
+            </span>
             <div v-else v-once>
-              <span v-for="(text, key) in country[item.key]" :key="key">
+              {{ getTextContent(country[item.key]) }}
+              <!-- <span v-for="(text, index) in country[item.key]" :key="index">
                 {{ text.name || text }}
-              </span>
+                {{ index !== country[item.key].length - 1 ? ',' : '' }}
+              </span> -->
             </div>
-            <!-- {{
-              typeof country[item.key] !== 'object'
-                ? country[item.key]
-                : country[item.key]
-            }} -->
           </div>
         </div>
         <div class="border-countries">
@@ -39,7 +36,7 @@
             <li
               v-for="(country, idx) in borderCountries"
               :key="idx"
-              class="item"
+              class="border-countries--item"
             >
               {{ country }}
             </li>
@@ -51,6 +48,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'CountryPage',
   async asyncData({ $axios, params }) {
@@ -83,6 +82,32 @@ export default {
 
     return { country, keys, borderCountries }
   },
+  computed: {
+    ...mapState(['dark']),
+  },
+  methods: {
+    getTextContent(items) {
+      let text = ''
+
+      items.forEach((item, idx) => {
+        if (item.name) {
+          if (idx !== items.length - 1) {
+            text += `${item.name}, `
+          } else {
+            text += item.name
+          }
+        } else if (!item.name) {
+          if (idx !== items.length - 1) {
+            text += `${item}, `
+          } else {
+            text += item
+          }
+        }
+      })
+
+      return text
+    },
+  },
   head() {
     return {
       title: `Country: ${this.country.name}`,
@@ -92,10 +117,30 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/scss/variables';
+
 .wrapper {
   max-width: 1600px;
   margin: 0 auto;
   padding: 2rem;
+
+  &--dark {
+    color: white !important;
+
+    .toolbar button {
+      background: $dark-blue;
+      * {
+        color: hsl(207, 35%, 57%);
+      }
+      &:hover * {
+        color: white;
+      }
+    }
+
+    .border-countries--item {
+      background: $dark-blue;
+    }
+  }
 }
 .toolbar {
   width: 100%;
@@ -136,13 +181,13 @@ export default {
   }
 }
 
-.content {
+.row {
   display: flex;
-  // flex: 1;
-  flex-wrap: wrap;
   justify-content: flex-start;
   align-items: flex-start;
+  flex-wrap: wrap;
   width: 100%;
+  padding: 0 1rem;
 
   img {
     display: block;
@@ -151,15 +196,14 @@ export default {
   }
 
   .col {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    flex-grow: 1;
 
     &--padding {
-      padding: 1rem 0;
-      margin: 0 2vw;
+      padding: 1rem 2rem;
     }
 
     &--header {
@@ -167,33 +211,30 @@ export default {
       font-size: 3rem;
     }
 
-    .info {
-      display: flex;
-      flex-direction: column;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: flex-start;
-      max-width: 95%;
+    &__info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      column-gap: 1rem;
+      width: 100%;
       margin-bottom: 2rem;
 
       &--item {
         margin-bottom: 1rem;
-        margin-left: 0.5rem;
+        padding: 0 0.5rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
 
         & > div {
-          display: inline;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
         }
 
         .thick {
           font-weight: 800;
           margin-right: 0.5rem;
-        }
-        *:not([class='thick']) {
-          word-wrap: break-word;
         }
       }
     }
@@ -219,7 +260,7 @@ export default {
       list-style: none;
     }
 
-    .item {
+    &--item {
       padding: 0.25rem 0.75rem;
       margin: 1rem 0.5rem;
       box-shadow: 0 0 10px 0 rgba($color: #000000, $alpha: 0.1);
@@ -232,7 +273,7 @@ export default {
 
 @media screen and (min-width: 750px) {
   .col {
-    max-width: 45%;
+    max-width: 40%;
 
     &--padding {
       max-height: 75vh;
