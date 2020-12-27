@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="dropdown"
     :class="{
       dropdown: true,
       'dropdown--dark': dark,
@@ -8,27 +7,25 @@
     }"
   >
     <div class="dropdown--header" @click="toggleDropdown">
-      <fontAwesomeIcon icon="chevron-down" />
       <h3>
         {{ currRegion === 'None' ? 'Filter by Region' : currRegion }}
       </h3>
+      <fontAwesomeIcon icon="chevron-down" />
     </div>
-    <transition name="fade" mode="out-in">
-      <div v-show="isOpened" class="dropdown__content">
-        <div
-          v-for="(region, idx) in regions"
-          :key="idx"
-          class="dropdown__content--item"
-          @click="
-            $emit('select-region', region.toLowerCase())
-            toggleDropdown()
-            currRegion = region
-          "
-        >
-          <span>{{ region }}</span>
-        </div>
+    <div class="dropdown__content">
+      <div
+        v-for="(region, idx) in regions"
+        :key="idx"
+        class="dropdown__content--item"
+        @click="
+          $emit('select-region', region.toLowerCase())
+          toggleDropdown()
+          currRegion = region
+        "
+      >
+        <span>{{ region }}</span>
       </div>
-    </transition>
+    </div>
   </div>
 </template>
 
@@ -65,17 +62,10 @@ export default {
 
 .dropdown {
   position: relative;
-  padding: 0.75rem 1rem;
-  padding-right: 5rem;
-  background: white;
-  box-shadow: 0 5px 10px 0 rgba($color: #000000, $alpha: 0.2);
-  border-radius: 0.25rem;
-  margin: 0.5rem 1rem;
 
   &--dark {
-    background: $dark-blue;
-
     .dropdown--header {
+      background: $dark-blue;
       &:hover * {
         color: white;
       }
@@ -102,13 +92,20 @@ export default {
     .dropdown--header * {
       color: black;
     }
+
+    .dropdown__content {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
   }
 
   &--header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 0.75rem 1rem;
+    background: white;
+    box-shadow: 0 5px 10px 0 rgba($color: #000000, $alpha: 0.2);
+    border-radius: 0.25rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 
     * {
       font-weight: 400;
@@ -121,10 +118,7 @@ export default {
     }
 
     svg {
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      transform: translateY(-50%);
+      margin-left: 1.5rem;
     }
   }
 
@@ -138,6 +132,8 @@ export default {
     box-shadow: 0 5px 10px 0 rgba($color: #000000, $alpha: 0.2);
     height: fit-content;
     overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: clip-path 200ms ease-out;
 
     &--item {
       font-size: 1.1rem;
@@ -149,15 +145,5 @@ export default {
       }
     }
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
