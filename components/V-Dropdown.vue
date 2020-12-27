@@ -62,6 +62,7 @@ export default {
 
 .dropdown {
   position: relative;
+  margin: 0.5rem 1rem;
 
   &--dark {
     .dropdown--header {
