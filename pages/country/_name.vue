@@ -20,10 +20,6 @@
             </span>
             <div v-else v-once>
               {{ getTextContent(country[item.key]) }}
-              <!-- <span v-for="(text, index) in country[item.key]" :key="index">
-                {{ text.name || text }}
-                {{ index !== country[item.key].length - 1 ? ',' : '' }}
-              </span> -->
             </div>
           </div>
         </div>
@@ -32,15 +28,13 @@
           <span v-else
             >{{ country.name }} doesn't have any Border Countries
           </span>
-          <ul>
-            <li
-              v-for="(country, idx) in borderCountries"
-              :key="idx"
-              class="border-countries--item"
-            >
-              {{ country }}
-            </li>
-          </ul>
+          <span
+            v-for="(country, idx) in borderCountries"
+            :key="idx"
+            class="border-countries--item"
+          >
+            {{ country }}
+          </span>
         </div>
       </div>
     </div>
@@ -252,12 +246,11 @@ export default {
       font-size: 1.05rem;
     }
 
-    ul {
+    div {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: center;
-      list-style: none;
     }
 
     &--item {
@@ -266,7 +259,6 @@ export default {
       box-shadow: 0 0 10px 0 rgba($color: #000000, $alpha: 0.1);
       border-radius: 0.25rem;
       word-break: keep-all;
-      display: inline;
     }
   }
 }
@@ -274,10 +266,6 @@ export default {
 @media screen and (min-width: 750px) {
   .col {
     max-width: 40%;
-
-    &--padding {
-      max-height: 75vh;
-    }
   }
 
   .info {
