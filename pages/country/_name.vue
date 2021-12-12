@@ -51,7 +51,7 @@ export default {
     const requestName = name.replace(/-/g, ' ')
     const country = (
       await $axios.$get(
-        `https://restcountries.com/rest/v2/name/${requestName}?fullText=true`
+        `https://restcountries.com/v2/name/${requestName}?fullText=true`
       )
     )[0]
 
@@ -67,12 +67,13 @@ export default {
     ]
 
     const borderCountries = []
-    country.borders.forEach(async (countryCode) => {
-      const borderCountry = await $axios.$get(
-        `https://restcountries.eu/rest/v2/alpha/${countryCode.toLowerCase()}`
-      )
-      borderCountries.push(borderCountry.name)
-    })
+    if (country.borders)
+      country.borders.forEach(async (countryCode) => {
+        const borderCountry = await $axios.$get(
+          `https://restcountries.eu/rest/v2/alpha/${countryCode.toLowerCase()}`
+        )
+        borderCountries.push(borderCountry.name)
+      })
 
     return { country, keys, borderCountries }
   },
