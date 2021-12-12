@@ -49,7 +49,7 @@ export default {
   name: 'IndexPage',
   async asyncData({ $axios }) {
     const rawCountries = await $axios.$get(
-      'https://restcountries.eu/rest/v2/all'
+      'https://restcountries.com/rest/v2/all'
     )
     return { rawCountries }
   },

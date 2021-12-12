@@ -51,7 +51,7 @@ export default {
     const requestName = name.replace(/-/g, ' ')
     const country = (
       await $axios.$get(
-        `https://restcountries.eu/rest/v2/name/${requestName}?fullText=true`
+        `https://restcountries.com/rest/v2/name/${requestName}?fullText=true`
       )
     )[0]
 
