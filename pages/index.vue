@@ -48,9 +48,7 @@ const filters = {
 export default {
   name: 'IndexPage',
   async asyncData({ $axios }) {
-    const rawCountries = await $axios.$get(
-      'https://restcountries.com/rest/v2/all'
-    )
+    const rawCountries = await $axios.$get('https://restcountries.com/v2/all')
     return { rawCountries }
   },
   data: () => ({
