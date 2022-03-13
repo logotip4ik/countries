@@ -165,7 +165,11 @@ export default {
     }
 
     svg {
+      width: 1rem;
+      height: auto;
+
       margin-right: 1.5rem;
+
       transform: translateY(-1px);
     }
 
