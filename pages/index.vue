@@ -11,7 +11,7 @@
         :name="country.name"
         :population="country.population"
         :region="country.region"
-        :capital="country.capital"
+        :capital="country.capital || '¯\_(ツ)_/¯'"
         :flag="country.flag"
       ></VCountry>
     </div>
@@ -29,13 +29,13 @@ const filters = {
   custom: (list, { search }) => {
     const initialList = []
 
-    // This searchs through country names
+    // This searches through country names
     const countryNames = list.filter(({ name }) =>
       name.toLowerCase().includes(search.toLowerCase())
     )
     initialList.push(...countryNames)
 
-    // This searchs through country capitals
+    // This searches through country capitals
     const countryCapitals = list.filter(({ capital }) =>
       capital.toLowerCase().includes(search.toLowerCase())
     )
@@ -49,6 +49,7 @@ export default {
   name: 'IndexPage',
   async asyncData({ $axios }) {
     const rawCountries = await $axios.$get('https://restcountries.com/v2/all')
+
     return { rawCountries }
   },
   data: () => ({
