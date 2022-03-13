@@ -54,8 +54,13 @@ export default {
     position: absolute;
     left: 17px;
     top: 50%;
-    transform: translateY(-50%);
+
     color: rgba($color: #000000, $alpha: 0.4);
+
+    width: 1rem;
+    height: auto;
+
+    transform: translateY(-50%);
   }
 
   input {
