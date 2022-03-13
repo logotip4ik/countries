@@ -17,11 +17,7 @@
         v-for="(region, idx) in regions"
         :key="idx"
         class="dropdown__content--item"
-        @click="
-          $emit('select-region', region.toLowerCase())
-          toggleDropdown()
-          currRegion = region
-        "
+        @click="handleClick(region)"
       >
         <span>{{ region }}</span>
       </div>
@@ -44,6 +40,11 @@ export default {
     ...mapState(['dark']),
   },
   methods: {
+    handleClick(region) {
+      this.$emit('select-region', region.toLowerCase())
+      this.toggleDropdown()
+      this.currRegion = region
+    },
     toggleDropdown() {
       this.isOpened = !this.isOpened
       clearTimeout(this.timeout)
