@@ -48,6 +48,10 @@ nav {
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     border: none;
     background: transparent;
     border-radius: 0.25rem;
@@ -66,6 +70,9 @@ nav {
     }
 
     svg {
+      width: 1rem;
+      height: auto;
+
       transform: translateY(-1px);
       margin-right: 0.5rem;
     }
