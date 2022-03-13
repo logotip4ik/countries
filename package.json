@@ -14,7 +14,7 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "core-js": "^3.6.5",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.15.8"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
@@ -26,7 +26,6 @@
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "fibers": "^5.0.0",
     "gh-pages": "^3.1.0",
     "prettier": "^2.1.2",
     "sass": "^1.30.0",
