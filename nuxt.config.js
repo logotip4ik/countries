@@ -27,10 +27,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/fontawesome',
-  ],
+  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/fontawesome'],
 
   fontawesome: {
     icons: {
